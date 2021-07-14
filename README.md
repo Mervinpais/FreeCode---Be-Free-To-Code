@@ -6,4 +6,4 @@
 <h3>FAQ (Frequently Asked Questions)</h3>
 <h4>When will there be support for other languages?</h4>
 <h5>Ans: Ah yes, the answer is no. Until i can finish the IDE, sadly im only gonna support my Coding language(W14#) since its very easy to add(i literally just copyed the code and added some modifications for it work lol), but i might be able to make packages to download so you can get any language you need, example; Python,Java,C#,F# and more if i can</h5>
-<h4>More FAQs are comming soon...</h4>
+<h2>More FAQs are comming soon...</h2>
