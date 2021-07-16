@@ -8,10 +8,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
+using System.Net;
+using System.Net.Sockets;
+using System.Diagnostics;
 
 namespace FreeCode___Be_Free_to_code
 {
-
     public partial class Form1 : Form
     {
         public Form1()
@@ -22,6 +24,35 @@ namespace FreeCode___Be_Free_to_code
         private void Form1_Load(object sender, EventArgs e)
         {
 
+        }
+        public class Error_Codes
+        {
+            public static String Reading_No_File_Error = "0xr00001";
+            public static String Command_Not_Recognised = "0xcnr00001";
+        }
+        public class Read_error1 : Exception
+        {
+            //Overriding the Message property
+            public override string Message
+            {
+                get
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    return $"Please make sure there is a .txt file in W14-Sharp >> W14-Sharp_coding_language >> bin >> Debug >> netcoreapp3.1 \nPlease close this program, insert your file, then reopen this program and then type in 'read *file name*.txt' \n Error_Code: " + Error_Codes.Reading_No_File_Error + "\n Error_Name: READING_NO_FILE_ERROR \n";
+                }
+            }
+        }
+        public class Command_error1 : Exception
+        {
+            //Overriding the Message property
+            public override string Message
+            {
+                get
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    return $"Error is not recognised as an internal/external command. Error_Code:" + Error_Codes.Command_Not_Recognised + " Error_Name: COMMAND_NOT_RECOGNISED";
+                }
+            }
         }
         public class Global
         {
@@ -50,7 +81,35 @@ namespace FreeCode___Be_Free_to_code
             public static String Code;
             public static String Output_cache;
         }
+        
+        static void python_test() //this is  a test to see if c# and python can work together to make the language have more features :D
+        {
+            var psi = new ProcessStartInfo();
+            psi.FileName = @"C:\Users\mervi\AppData\Local\Programs\Python\Python39\python.exe";
+            var script = @"C:\Users\mervi\source\repos\W14-Sharp\W14-Sharp_coding_language\Python_help\python-to-extend-w14-sharp.py";
 
+            psi.Arguments = $"\"{script}\"";
+            psi.UseShellExecute = false;
+            psi.CreateNoWindow = true;
+            psi.RedirectStandardOutput = true;
+            psi.RedirectStandardError = true;
+            var errors = "";
+            var results = "";
+
+            using (var process = Process.Start(psi))
+            {
+                errors = process.StandardError.ReadToEnd();
+                results = process.StandardOutput.ReadToEnd();
+            }
+            Console.WriteLine("The Results and Errors are here below");
+            Console.WriteLine("Results");
+            Console.WriteLine(results);
+            Console.WriteLine();
+            Console.WriteLine("Errors");
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine(errors);
+            Console.ForegroundColor = ConsoleColor.White;
+        }
 
         private void richTextBox1_TextChanged(object sender, EventArgs e)
         {
@@ -59,13 +118,14 @@ namespace FreeCode___Be_Free_to_code
 
         private void button1_Click(object sender, EventArgs e)
         {
+
             string codeline;
             Console.WriteLine("W14# Coding Terminal - Checker");
             Console.WriteLine("==============================");            
             codeline = richTextBox1.Text;
-            if (codeline.StartsWith("Say"))
+            if (codeline.Contains("Say"))
             {
-                richTextBox2.Text = codeline.Substring(4) + Environment.NewLine;
+                richTextBox2.Text += codeline.Substring(4);
             }
             else if (codeline == "time")
             {
@@ -78,28 +138,28 @@ namespace FreeCode___Be_Free_to_code
                 Global.num2 = Convert.ToInt32(codeline.Substring(7, 1));
                 if (codeline.Substring(6, 1) == "+")
                 {
-                    Global.num2 = Convert.ToInt32(codeline.Substring(7, 1));
                     Global.Math_result = Global.num1 + Global.num2;
-                    richTextBox2.Text = Global.Math_result + ToString();
+                    richTextBox2.Text += Global.Math_result + ToString();
                 }
                 else if (codeline.Substring(6, 1) == "-")
                 {
-                    Global.num2 = Convert.ToInt32(codeline.Substring(7, 1));
                     Global.Math_result = (Global.num1 - Global.num2);
-                    richTextBox2.Text = Global.Math_result + ToString();
+                    richTextBox2.Text += Global.Math_result + ToString();
                 }
                 else if (codeline.Substring(6, 1) == "*")
                 {
-                    Global.num2 = Convert.ToInt32(codeline.Substring(7, 1));
                     Global.Math_result = Global.num1 * Global.num2;
-                    richTextBox2.Text = Global.Math_result + ToString();
+                    richTextBox2.Text += Global.Math_result + ToString();
                 }
                 else if (codeline.Substring(6, 1) == "/")
                 {
-                    Global.num2 = Convert.ToInt32(codeline.Substring(7, 1));
                     Global.Math_result = Global.num1 / Global.num2;
-                    richTextBox2.Text = Global.Math_result + ToString();
+                    richTextBox2.Text += Global.Math_result + ToString();
                 }
+            }
+            if (codeline == "python")
+            {
+                python_test();
             }
             //}        
             //if (codeline.StartsWith("math"))
@@ -145,15 +205,57 @@ namespace FreeCode___Be_Free_to_code
             //        Console.WriteLine("Please close this program, insert your file, then reopen this program and then type in 'read *file name*.txt'");
             //    }
             //}
-            else
+            /*else
             {
                 richTextBox2.Text = "ERROR(not really but); did you type any code in to compile?";
-            }
+            } */
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
             richTextBox2.Text = "";
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            /*saveDialog_message MessageBox = new saveDialog_message();
+            MessageBox.show("you clicked me","Save",saveDialog_message.MessageBoxButton.YesNo);*/
+            SaveFileDialog saveFileDialog1 = new SaveFileDialog();
+            saveFileDialog1.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
+            saveFileDialog1.ShowDialog();
+            if (saveFileDialog1.FileName != "")
+            {
+                using (StreamWriter sw = new StreamWriter(saveFileDialog1.OpenFile()))
+                {
+                    sw.Write(richTextBox1.Text);
+                }
+            }
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog1 = new OpenFileDialog
+            {
+                InitialDirectory = @"C:\",
+                Title = "Browse Files",
+
+                CheckFileExists = true,
+                CheckPathExists = true,
+
+                DefaultExt = "txt",
+                Filter = "txt files (*.txt)|*.txt",
+                FilterIndex = 2,
+                RestoreDirectory = true,
+
+                ReadOnlyChecked = true,
+                ShowReadOnly = true
+            };
+
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                string text = System.IO.File.ReadAllText(openFileDialog1.FileName);
+                richTextBox1.Text = text;
+            }
         }
     }
 }  
