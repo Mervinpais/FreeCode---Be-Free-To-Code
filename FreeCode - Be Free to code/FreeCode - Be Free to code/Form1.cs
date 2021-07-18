@@ -24,7 +24,7 @@ namespace FreeCode___Be_Free_to_code
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            
+
         }
         public class Error_Codes
         {
@@ -55,6 +55,20 @@ namespace FreeCode___Be_Free_to_code
                 }
             }
         }
+        public static class Check
+        {
+            public static int CheckOccurrences(string str1, string pattern)
+            {
+                int count = 0;
+                int a = 0;
+                while ((a = str1.IndexOf(pattern, a)) != -1)
+                {
+                    a += pattern.Length;
+                    count++;
+                }
+                return count;
+            }
+        }
         public class Global
         {
             //public static string name;
@@ -82,17 +96,25 @@ namespace FreeCode___Be_Free_to_code
             public static String Code;
             public static String Output_cache;
         }
-        public static class Check {
-   public static int CheckOccurrences(string str1, string pattern) {
-      int count = 0;
-      int a = 0;
-      while ((a = str1.IndexOf(pattern, a)) != -1) {
-         a += pattern.Length;
-         count++;
-      }
-      return count;
-   }
-}
+        public class Variable_string
+        {
+            private string _name;
+            private string _data;
+
+            public string name
+            {
+                get { return _name; }
+                set { _name = value; }
+            }
+            public string data
+            {
+                get { return _data; }
+                set { _data = value; }
+            }
+            public void data_in_variable()
+            {
+            }
+        }
         static void python_test() //this is  a test to see if c# and python can work together to make the language have more features :D
         {
             var psi = new ProcessStartInfo();
@@ -137,7 +159,20 @@ namespace FreeCode___Be_Free_to_code
                         richTextBox1.SelectionColor = richTextBox1.ForeColor;
                     };
                 }
-                char find_char = '"';
+                char remove_quotes = '"';
+                string remove_quotess = remove_quotes.ToString();
+                if (richTextBox1.Text.Contains(remove_quotess))
+                {
+                    var matchString = Regex.Escape(remove_quotess);
+                    foreach (Match match in Regex.Matches(richTextBox1.Text, matchString))
+                    {
+                        richTextBox1.Select(match.Index, remove_quotess.Length);
+                        richTextBox1.SelectionColor = Color.DarkOrange;
+                        richTextBox1.Select(richTextBox1.TextLength, 0);
+                        richTextBox1.SelectionColor = richTextBox1.ForeColor;
+                    };
+                }
+                /*char find_char = '"';
                 if (richTextBox1.Text.Contains(find_char))
                 {
                     var matchString = Regex.Escape(find_char.ToString());
@@ -148,21 +183,54 @@ namespace FreeCode___Be_Free_to_code
                         richTextBox1.Select(richTextBox1.TextLength, 0);
                         richTextBox1.SelectionColor = richTextBox1.ForeColor;
                     };
-                }
+                }*/
             }
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-
             string codeline;
             Console.WriteLine("W14# Coding Terminal - Checker");
-            Console.WriteLine("==============================");            
+            Console.WriteLine("==============================");
+            richTextBox2.Text = "";
             codeline = richTextBox1.Text;
             if (codeline.Contains("Say"))
             {
-                codeline = codeline.Replace("Say", "");
-                richTextBox2.Text += codeline + Environment.NewLine;
+                string say = "Say";
+                foreach (string line in richTextBox1.Lines)
+                {
+                    if(line.Contains(say)) {
+                        char remove_quotes = '"';
+                        string remove_quotess = remove_quotes.ToString();
+                        codeline = codeline.Replace("Say", "");
+                        if (codeline.Contains(remove_quotess) && codeline.Contains(";"))
+                        {
+                            codeline = codeline.Replace(remove_quotess, "");
+                            codeline = codeline.Replace(";", "");
+                            richTextBox2.ForeColor = Color.White;
+                            richTextBox2.Text += "";
+                            richTextBox2.Text += codeline + Environment.NewLine;
+                        }
+                        /*else if (!codeline.Contains(remove_quotess) && !codeline.Contains(";"))
+                        {
+                            richTextBox2.Text += "";
+                            richTextBox2.ForeColor = Color.Red;
+                            richTextBox2.Text += "Did you forget to add quotes and semicolon. Its and honest mistake so please fix it some the rest of the code can work :)"/*+ " Error_Name: COMMAND_NOT_RECOGNISED";
+                        }*/
+                        else if (!richTextBox1.Text.Contains(remove_quotess))
+                        {
+                            richTextBox2.Text += "";
+                            richTextBox2.ForeColor = Color.Red;
+                            richTextBox2.Text += "Did you forget to add quotes. Its and honest mistake so please fix it some the rest of the code can work :)"/*+ " Error_Name: COMMAND_NOT_RECOGNISED"*/;
+                        }
+                        else if (!richTextBox1.Text.Contains(";"))
+                        {
+                            richTextBox2.Text += "";
+                            richTextBox2.ForeColor = Color.Red;
+                            richTextBox2.Text += "Did you forget to add a semicolon. Its and honest mistake so please fix it some the rest of the code can work :)"/*+ " Error_Name: COMMAND_NOT_RECOGNISED"*/;
+                        }
+                    }
+                }
             }
             else if (codeline == "time")
             {
@@ -198,38 +266,18 @@ namespace FreeCode___Be_Free_to_code
             {
                 python_test();
             }
-            //}        
-            //if (codeline.StartsWith("math"))
-            //{
-            //    Global.num1 = Convert.ToInt32(codeline.Substring(5, 1));
-            //    Global.num2 = Convert.ToInt32(codeline.Substring(7, 1));
-            //    if (codeline.Substring(6, 1) == "+")
-            //    {
-            //        Global.num2 = Convert.ToInt32(codeline.Substring(7, 1));
-            //        Global.Math_result = Global.num1 + Global.num2;
-            //        Console.WriteLine(Global.Math_result);
-            //    }
-            //    else if (codeline.Substring(6, 1) == "-")
-            //    {
-            //        Global.num2 = Convert.ToInt32(codeline.Substring(7, 1));
-            //        Global.Math_result = (Global.num1 - Global.num2);
-            //        Console.WriteLine(Global.Math_result);
-            //    }
-            //    else if (codeline.Substring(6, 1) == "*")
-            //    {
-            //        Global.num2 = Convert.ToInt32(codeline.Substring(7, 1));
-            //        Global.Math_result = Global.num1 * Global.num2;
-            //        Console.WriteLine(Global.Math_result);
-            //    }
-            //    else if (codeline.Substring(6, 1) == "/")
-            //    {
-            //        Global.num2 = Convert.ToInt32(codeline.Substring(7, 1));
-            //        Global.Math_result = Global.num1 / Global.num2;
-            //        Console.WriteLine(Global.Math_result);
-            //    }
-
+            /*if (codeline.Contains("string"))
+            {
+                //string Name = codeline.Contains("string".Substring(7)).ToString();
+                Variable_string Variable_str = new Variable_string();
+                if (codeline.Contains("string".Substring(7)))
+                {
+                    Variable_string name = new Variable_string();
+                }
+                richTextBox2.Text += Variable_str.name;
+            }
             //}
-            //if (codeline.StartsWith("read"))     //Removed Since it will just causes bugs(in the IDE)
+            //if (codeline.StartsWith("read"))     //Removed Since Its replaced with the Open Command
             //{
             //    if (codeline.Substring(4) != "")
             //    {
@@ -300,6 +348,11 @@ namespace FreeCode___Be_Free_to_code
             W14_Sharp_Doc Help_on_W14 = new W14_Sharp_Doc();
             Help_on_W14.Show();
         }
-    }
-}  
 
+        private void button6_Click(object sender, EventArgs e)
+        {
+            Open_a_Help_Website help_from_web = new Open_a_Help_Website();
+            help_from_web.Show();
+        }
+    }
+}
