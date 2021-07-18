@@ -7,3 +7,6 @@
 <h4>When will there be support for other languages?</h4>
 <h5>Ans: Ah yes, the answer is no. Until i can finish the IDE, sadly im only gonna support my Coding language(W14#) since its very easy to add(i literally just copyed the code and added some modifications for it work lol), but i might be able to make packages to download so you can get any language you need, example; Python,Java,C#,F# and more if i can</h5>
 <h2>More FAQs are comming soon...</h2>
+<h4>Why are there SOO MANY BUGS?!</h4>
+<h5>Ans: Its because i have no-one to help me on the project so i first focus on fixing bugs but then i make one mistake an no-one is there help soo :(
+Im ok being alone since i dont want to boss around everyone so if you can point out bugs and how to fix then THAT WOULD BE THE BEST THING YOU COULD DO FOR ME!! so please, if you are a developer, please help me out. I might use XML or vba or Visual basic to help but fornow, the whole project will be based on c#</h5>
