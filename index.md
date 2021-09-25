@@ -1,3 +1,5 @@
-Hey there!
+<h1>Hey there!</h1>
 
-WIP work in progress
+Welcome to the FreeCode Github website!
+
+<b>WIP work in progress</b>
