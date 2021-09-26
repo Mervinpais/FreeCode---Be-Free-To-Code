@@ -22,7 +22,7 @@ the output would be
 ```
 (in the textbox)why did you say bruh
 ```
-<h4>BUT lets say i wanted a console application instead</h4>
+<h4>BUT lets say i wanted a console application instead<h3 style="color: red;">(ALERT, THIS WAS NOT TESTED!!, IT MAY NOT WORK!!)</h3></h4>
 ```
 string text_i_want = "bruh";//replace the text in quotes with what you want
 foreach (line in textbox1)
