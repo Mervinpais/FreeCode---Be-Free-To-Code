@@ -1,6 +1,6 @@
 <h1 style="color: #42A5F5;">Hey there!</h1>
 
-<p style="color: #42A5F5;">Welcome to the FreeCode Github website!
+<p style="color: #42A5F5;">Welcome to the FreeCode Github website!</p>
 
 <p style="color: #42A5F5;">I love to share my code to fellow programers so please, click below if you want to know how the Code works :3</p>
 <a>[REMOVED]</a>
